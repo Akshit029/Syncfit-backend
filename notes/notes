@@ -1,0 +1,15 @@
+server:
+npm install express mongoose dotenv cors jsonwebtoken bcryptjs
+npm install validator
+npm install nodemailer
+npm install cookie-parser
+npm install node-fetch@2
+npm install express-fileupload
+
+client:
+npm install axios react-router-dom
+npm install -D tailwindcss@3 postcss autoprefixer
+npx tailwindcss init . 
+npm install chart.js react-chartjs-2
+npm install lucide-react
+npm install react-circular-progressbar
