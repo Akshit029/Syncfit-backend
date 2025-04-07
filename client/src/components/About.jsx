@@ -1,6 +1,10 @@
 import React from 'react';
 import { User, Book, Code } from 'lucide-react';
 
+
+// hi
+
+
 const AboutUs = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
