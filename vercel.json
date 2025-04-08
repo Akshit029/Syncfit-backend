@@ -2,11 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
+      "src": "client/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "client/build",
-        "buildCommand": "npm install --force && cd client && npm install --force && npm run build"
+        "distDir": "build",
+        "buildCommand": "npm install -g npm@10.9.2 && npm install --no-package-lock && npm run build"
       }
     }
   ],
