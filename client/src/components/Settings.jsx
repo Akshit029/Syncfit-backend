@@ -22,7 +22,7 @@ const Settings = () => {
       try {
         setIsLoading(true);
         // This endpoint will use the HTTP-only cookie for authentication
-        const response = await axios.get('/api/auth/user', { withCredentials: true });
+        const response = await axios.get(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/auth/user`, { withCredentials: true });
         
         if (response.data && response.data.user) {
           setEmail(response.data.user.email || '');
@@ -66,7 +66,7 @@ const Settings = () => {
       
       // Use the correct change-password endpoint with the expected parameter names
       const response = await axios.put(
-        '/api/auth/change-password', 
+        `${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/auth/change-password`, 
         {
           currentPassword,
           newPassword

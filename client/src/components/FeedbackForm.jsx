@@ -25,7 +25,7 @@ const FeedbackForm = () => {
 
   const checkAuth = async () => {
     try {
-      const response = await axios.get('/api/auth/user', { withCredentials: true });
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/auth/user`, { withCredentials: true });
       setIsAuthenticated(!!response.data.user);
     } catch (error) {
       setIsAuthenticated(false);
@@ -35,7 +35,7 @@ const FeedbackForm = () => {
   const fetchFeedbacks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/feedback');
+      const response = await axios.get(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/feedback`);
       setFeedbacks(response.data);
       setLoading(false);
     } catch (error) {
@@ -76,7 +76,7 @@ const FeedbackForm = () => {
     
     try {
       setLoading(true);
-      await axios.post('/api/feedback', formData, { withCredentials: true });
+      await axios.post(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/feedback`, formData, { withCredentials: true });
       
       // Add to local state with current date
       const newFeedback = {

@@ -20,7 +20,7 @@ const Login = () => {
     
     try {
       const result = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/login`,
+        `${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/auth/login`,
         { email: trimmedEmail, password: trimmedPassword },
         { withCredentials: true }
       );

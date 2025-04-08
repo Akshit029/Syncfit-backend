@@ -26,7 +26,7 @@ const Signup = () => {
     
     try {
       const result = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/register`,
+        `${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/auth/register`,
         { 
           name: name.trim(), 
           email: email.trim(), 

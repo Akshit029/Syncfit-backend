@@ -44,7 +44,7 @@ const Home = () => {
       
       try {
         // Fetch user goals first
-        const goalsResponse = await fetch('/api/user/goals', {
+        const goalsResponse = await fetch(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/user/goals`, {
           credentials: 'include'
         });
         if (goalsResponse.ok) {
@@ -55,7 +55,7 @@ const Home = () => {
         }
 
         // Fetch user data
-        const response = await fetch('/api/auth/user', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/auth/user`, {
           credentials: 'include'
         });
         
@@ -77,7 +77,7 @@ const Home = () => {
         }
         
         // Fetch nutrition data
-        const nutritionResponse = await fetch('/api/user/nutrition', {
+        const nutritionResponse = await fetch(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/user/nutrition`, {
           credentials: 'include'
         });
         if (nutritionResponse.ok) {
@@ -129,7 +129,7 @@ const Home = () => {
   const fetchRecommendations = async () => {
     setIsLoadingRecommendations(true);
     try {
-      const response = await fetch('/api/user/recommendations', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/user/recommendations`, {
         credentials: 'include'
       });
       
@@ -188,7 +188,7 @@ const Home = () => {
       }
 
       // Update both goals in one request
-      const response = await fetch('/api/user/updateGoal', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/user/updateGoal`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -215,7 +215,7 @@ const Home = () => {
       setDailyGoal(newStepGoal);
 
       // Fetch updated nutrition data
-      const nutritionResponse = await fetch('/api/user/nutrition', {
+      const nutritionResponse = await fetch(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/user/nutrition`, {
         credentials: 'include'
       });
       if (nutritionResponse.ok) {
@@ -237,7 +237,7 @@ const Home = () => {
       setIsEditingStepGoal(false);
       
       try {
-        await fetch('/api/user/updateStepGoal', {
+        await fetch(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/user/updateStepGoal`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -261,7 +261,7 @@ const Home = () => {
       setIsAddingSteps(false);
       
       try {
-        await fetch('/api/user/updateSteps', {
+        await fetch(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/user/updateSteps`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -283,7 +283,7 @@ const Home = () => {
     setSteps(0);
     
     try {
-      await fetch('/api/user/resetDailySteps', {
+      await fetch(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/user/resetDailySteps`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

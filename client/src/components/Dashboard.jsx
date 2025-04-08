@@ -25,7 +25,7 @@ ChartJS.register(
 
 // Configure axios
 axios.defaults.withCredentials = true; // Important for cookies/authentication
-const API_URL = `${process.env.REACT_APP_API_URL}/api`; // Update with your backend URL
+const API_URL = `${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api`; // Update with your backend URL
 
 const Dashboard = () => {
   // User data state

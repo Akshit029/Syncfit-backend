@@ -75,7 +75,7 @@ const HealthCalculator = () => {
   const handleGoalSelection = async (goal) => {
     setSelectedGoal(goal);
     try {
-      const response = await fetch('/api/user/updateGoal', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/user/updateGoal`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

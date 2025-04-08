@@ -68,7 +68,7 @@ const Nutrition = () => {
     const fetchSearchResults = async () => {
       try {
         console.log('Fetching search results for:', searchTerm);
-        const response = await fetch(`/api/user/nutrition/foodDatabase?searchTerm=${encodeURIComponent(searchTerm)}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/user/nutrition/foodDatabase?searchTerm=${encodeURIComponent(searchTerm)}`, {
           credentials: 'include',
           headers: {
             'Accept': 'application/json',
@@ -127,7 +127,7 @@ const Nutrition = () => {
   useEffect(() => {
     const fetchNutritionData = async () => {
       try {
-        const response = await fetch(`/api/user/nutrition?date=${selectedDate}`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/user/nutrition?date=${selectedDate}`, {
           credentials: 'include',
           headers: {
             'Accept': 'application/json',
@@ -192,7 +192,7 @@ const Nutrition = () => {
       console.log('=== Reset Daily Data Debug ===');
       console.log('Resetting data for date:', selectedDate);
       
-      const response = await fetch('/api/user/nutrition/resetDaily', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com'}/api/user/nutrition/resetDaily`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
