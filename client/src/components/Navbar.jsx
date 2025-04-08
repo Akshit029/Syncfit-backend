@@ -23,7 +23,7 @@ const Navbar = () => {
   // Memoize checkCurrentUser to prevent unnecessary re-renders
   const checkCurrentUser = useCallback(async () => {
     try {
-      const response = await axios.get('https://syncfit-j7pw.onrender.com/api/auth/me', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/me`, {
         withCredentials: true,
       });
 

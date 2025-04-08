@@ -37,7 +37,7 @@ const Profile = () => {
 
         // Also fetch from API to ensure data is up to date
         // Changed from /api/auth/me to /api/auth/user to match backend route
-        const response = await axios.get('https://syncfit-j7pw.onrender.com/api/auth/user', {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/user`, {
           withCredentials: true,
         });
 
@@ -67,7 +67,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('https://syncfit-j7pw.onrender.com/api/auth/logout', {}, {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/logout`, {}, {
         withCredentials: true,
       });
 
@@ -93,7 +93,7 @@ const Profile = () => {
     try {
       // Update user profile API call - changed endpoint to match backend
       // In Profile.jsx handleUpdateProfile function
-        const response = await axios.put('https://syncfit-j7pw.onrender.com/api/auth/update', formData, {
+        const response = await axios.put(`${process.env.REACT_APP_API_URL}/api/auth/update`, formData, {
           withCredentials: true,
         });
       

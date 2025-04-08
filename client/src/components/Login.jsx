@@ -20,7 +20,7 @@ const Login = () => {
     
     try {
       const result = await axios.post(
-        'https://syncfit-j7pw.onrender.com/api/auth/login',
+        `${process.env.REACT_APP_API_URL}/api/auth/login`,
         { email: trimmedEmail, password: trimmedPassword },
         { withCredentials: true }
       );
