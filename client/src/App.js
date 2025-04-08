@@ -20,6 +20,8 @@ import FeedbackForm from "./components/FeedbackForm";
 // Configure axios defaults
 axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5001';
 axios.defaults.withCredentials = true;
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common['Access-Control-Allow-Credentials'] = 'true';
 
 function App() {
   const [message, setMessage] = useState("");
