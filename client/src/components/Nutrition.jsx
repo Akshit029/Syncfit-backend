@@ -17,7 +17,6 @@ const Nutrition = () => {
   const [dailyCalorieTarget, setDailyCalorieTarget] = useState(2000);
   const [activeTab, setActiveTab] = useState('add'); // 'add', 'summary', 'plan'
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
-  const [dailyTotals, setDailyTotals] = useState([]);
   const [today, setToday] = useState(new Date().toISOString().split('T')[0]);
 
   // Meal times
@@ -164,11 +163,6 @@ const Nutrition = () => {
         }
         
         setMealPlan(initialMealPlan);
-        
-        // Update the daily totals
-        if (data.dailyTotals) {
-          setDailyTotals(data.dailyTotals);
-        }
       } catch (error) {
         console.error('Error fetching nutrition data:', error);
       }
@@ -247,7 +241,6 @@ const Nutrition = () => {
           }
           
           setMealPlan(groupedMeals);
-          setDailyTotals(data.dailyTotals || []);
         } else {
           const errorText = await refreshResponse.text();
           console.error('Refresh API Error Response:', errorText);
@@ -339,45 +332,41 @@ const Nutrition = () => {
         }
       });
       
-      if (!refreshResponse.ok) {
-        const errorData = await refreshResponse.json();
-        throw new Error(errorData.message || 'Failed to refresh nutrition data');
-      }
-      
-      const data = await refreshResponse.json();
-      console.log('Refreshed nutrition data:', data);
-      
-      // Update daily totals
-      setDailyTotals(data.dailyTotals || []);
-      
-      // Update meal plan with the latest data
-      if (data.meals) {
-        const updatedMealPlan = {
-          Breakfast: [],
-          'Morning Snack': [],
-          Lunch: [],
-          'Evening Snack': [],
-          Dinner: []
-        };
+      if (refreshResponse.ok) {
+        const data = await refreshResponse.json();
+        console.log('Refreshed nutrition data:', data);
         
-        // Handle the new structure where meals is an object
-        Object.keys(data.meals).forEach(mealTime => {
-          if (Array.isArray(data.meals[mealTime])) {
-            updatedMealPlan[mealTime] = [...data.meals[mealTime]];
-          }
-        });
+        // Update meal plan with the latest data
+        if (data.meals) {
+          const updatedMealPlan = {
+            Breakfast: [],
+            'Morning Snack': [],
+            Lunch: [],
+            'Evening Snack': [],
+            Dinner: []
+          };
+          
+          // Handle the new structure where meals is an object
+          Object.keys(data.meals).forEach(mealTime => {
+            if (Array.isArray(data.meals[mealTime])) {
+              updatedMealPlan[mealTime] = [...data.meals[mealTime]];
+            }
+          });
+          
+          setMealPlan(updatedMealPlan);
+        }
         
-        setMealPlan(updatedMealPlan);
-      }
-      
-      // Refresh progress data to update the progress page
-      try {
-        await fetch('/api/user/progress', {
-          credentials: 'include'
-        });
-        console.log('Progress data refreshed after adding meal');
-      } catch (error) {
-        console.error('Error refreshing progress data:', error);
+        // Refresh progress data to update the progress page
+        try {
+          await fetch('/api/user/progress', {
+            credentials: 'include'
+          });
+          console.log('Progress data refreshed after adding meal');
+        } catch (error) {
+          console.error('Error refreshing progress data:', error);
+        }
+      } else {
+        throw new Error('Failed to refresh nutrition data');
       }
     } catch (error) {
       console.error('Error adding meal:', error);
@@ -442,9 +431,6 @@ const Nutrition = () => {
         const data = await refreshResponse.json();
         console.log('Refreshed nutrition data:', data);
         
-        // Update daily totals
-        setDailyTotals(data.dailyTotals || []);
-        
         // Update meal plan with the latest data
         if (data.meals) {
           const updatedMealPlan = {
@@ -480,51 +466,6 @@ const Nutrition = () => {
     } catch (error) {
       console.error('Error removing meal:', error);
       alert(error.message || 'Failed to remove meal. Please try again.');
-    }
-  };
-
-  // Add a new function to update the daily calorie goal
-  const updateDailyCalorieGoal = async (newGoal) => {
-    try {
-      const response = await fetch('/api/users/nutrition/updateCalorieGoal', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ dailyCalorieGoal: newGoal }),
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to update daily calorie goal');
-      }
-      
-      const data = await response.json();
-      setDailyCalorieTarget(data.dailyCalorieGoal);
-      return data;
-    } catch (error) {
-      console.error('Error updating daily calorie goal:', error);
-      throw error;
-    }
-  };
-
-  // Add a new state for the calorie goal input
-  const [calorieGoalInput, setCalorieGoalInput] = useState('');
-
-  // Add a function to handle the calorie goal update
-  const handleCalorieGoalUpdate = async () => {
-    try {
-      const newGoal = parseInt(calorieGoalInput);
-      if (isNaN(newGoal) || newGoal < 0) {
-        alert('Please enter a valid calorie goal');
-        return;
-      }
-      
-      await updateDailyCalorieGoal(newGoal);
-      setCalorieGoalInput('');
-      alert('Daily calorie goal updated successfully');
-    } catch (error) {
-      console.error('Error updating calorie goal:', error);
-      alert('Failed to update daily calorie goal');
     }
   };
 

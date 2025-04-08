@@ -31,10 +31,17 @@ const Dashboard = () => {
   // User data state
   const [userData, setUserData] = useState({
     workoutsCompleted: 0,
-    caloriesBurned: 0,
-    weightLost: 0,
-    weightData: [],
-    milestones: []
+    calorieGoal: 2000,
+    caloriesConsumed: 0,
+    stepsGoal: 10000,
+    stepsTaken: 0,
+    waterGoal: 8,
+    waterConsumed: 0,
+    streak: 0,
+    lastWorkoutDate: null,
+    lastWaterDate: null,
+    lastStepsDate: null,
+    lastCalorieDate: null
   });
 
   // All weight entries - store full history
@@ -151,53 +158,34 @@ const Dashboard = () => {
     checkAuth();
   }, []);
 
+  const fetchUserData = useCallback(async () => {
+    try {
+      const response = await fetch('/api/user/data', {
+        credentials: 'include'
+      });
+      if (!response.ok) {
+        throw new Error('Failed to fetch user data');
+      }
+      const data = await response.json();
+      setUserData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      setError('Failed to load user data');
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchUserData();
+  }, [fetchUserData]);
+
   // Only fetch data if authenticated
   useEffect(() => {
     if (isAuthenticated) {
       fetchUserData();
     }
   }, [isAuthenticated, timeView, fetchUserData]);
-
-  // Fetch user data from MongoDB - Moved to a useCallback to use in dependencies
-  const fetchUserData = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`${API_URL}/fitness?timeView=${timeView}`);
-      
-      // If no data returned yet, initialize with our time labels
-      if (!response.data.weightData || response.data.weightData.length === 0) {
-        const labels = timeView === 'monthly' ? generateMonthLabels() : generateWeekLabels();
-        response.data.weightData = labels.map(label => ({ 
-          timeLabel: label, 
-          weight: null 
-        }));
-      }
-      
-      setUserData(response.data);
-      
-      // Also store all weight entries for the full history graph
-      if (response.data.allWeightEntries) {
-        setAllWeightEntries(response.data.allWeightEntries);
-      }
-      
-      setError(null);
-    } catch (err) {
-      console.error('Error fetching fitness data:', err);
-      setError('Failed to load your fitness data. Please try again later.');
-      
-      // Initialize with empty data structure - use null instead of 0
-      const labels = timeView === 'monthly' ? generateMonthLabels() : generateWeekLabels();
-      setUserData(prev => ({
-        ...prev,
-        weightData: labels.map(label => ({ 
-          timeLabel: label, 
-          weight: null 
-        }))
-      }));
-    } finally {
-      setLoading(false);
-    }
-  }, [timeView, generateMonthLabels, generateWeekLabels]);
 
   // Initialize weight data based on time view
   useEffect(() => {

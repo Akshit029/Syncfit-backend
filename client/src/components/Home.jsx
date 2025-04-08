@@ -27,7 +27,6 @@ const Home = () => {
     fats: 0
   });
 
-  
   // Predefined goal options
   const goalOptions = ['Weight loss', 'Muscle gain', 'Endurance', 'Flexibility', 'Overall fitness'];
 
@@ -302,9 +301,6 @@ const Home = () => {
   // Calculate progress percentages with proper checks
   const stepsPercentage = Math.min(Math.round((steps / (userGoals.dailyStepGoal || 10000)) * 100), 100);
   const caloriesPercentage = Math.min(Math.round((calories / (userGoals.dailyCalorieGoal || 2000)) * 100), 100);
-  const dashArray = 283; // Circumference of a circle with 45px radius (2 * PI * 45)
-  const stepsDashOffset = dashArray - (dashArray * stepsPercentage) / 100;
-  const caloriesDashOffset = dashArray - (dashArray * caloriesPercentage) / 100;
 
   // Add safety checks for display values
   const displaySteps = isNaN(steps) ? 0 : steps;
