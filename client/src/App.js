@@ -19,7 +19,7 @@ import FeedbackForm from "./components/FeedbackForm";
 
 // Configure axios defaults
 const API_URL = process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com';
-axios.defaults.baseURL = API_URL;
+axios.defaults.baseURL = '/api';  // Use relative URL for API calls
 axios.defaults.withCredentials = true;
 axios.defaults.headers.common['Accept'] = 'application/json';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -29,6 +29,10 @@ axios.interceptors.request.use(
   config => {
     // Add timestamp to prevent caching
     config.params = { ...config.params, _t: Date.now() };
+    // Ensure the URL starts with /api
+    if (!config.url.startsWith('/api')) {
+      config.url = `/api${config.url}`;
+    }
     return config;
   },
   error => {

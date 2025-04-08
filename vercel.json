@@ -9,17 +9,13 @@
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "https://syncfit-ez0z.onrender.com/api/$1",
-      "headers": {
-        "Access-Control-Allow-Origin": "https://syncfit.vercel.app",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept, Authorization",
-        "Access-Control-Allow-Credentials": "true"
-      }
-    },
+      "source": "/api/:path*",
+      "destination": "https://syncfit-ez0z.onrender.com/api/:path*"
+    }
+  ],
+  "routes": [
     {
       "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|json))",
       "dest": "/client/build/$1",
