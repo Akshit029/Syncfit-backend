@@ -30,7 +30,7 @@ if (!JWT_SECRET) {
 
 // ✅ CORS configuration
 const corsOptions = {
-  origin: 'http://localhost:3000', // Allow frontend to access backend
+  origin: ['https://syncfit-j7pw.onrender.com', 'http://localhost:3000'], // Allow both deployed and local frontend
   methods: 'GET,POST,PUT,DELETE',
   allowedHeaders: 'Content-Type,Authorization',
   credentials: true, // Allow cookies (like JWT tokens)
