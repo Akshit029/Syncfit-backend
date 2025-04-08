@@ -30,10 +30,11 @@ if (!JWT_SECRET) {
 
 // ✅ CORS configuration
 const corsOptions = {
-  origin: ['https://syncfit-j7pw.onrender.com', 'http://localhost:3000'], // Allow both deployed and local frontend
-  methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Content-Type,Authorization',
-  credentials: true, // Allow cookies (like JWT tokens)
+  origin: ['https://syncfit-j7pw.onrender.com', 'http://localhost:3000', 'https://syncfit.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
+  credentials: true,
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));

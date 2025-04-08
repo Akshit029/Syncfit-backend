@@ -18,10 +18,34 @@ import HealthCalculator from "./components/HealthCalculator";
 import FeedbackForm from "./components/FeedbackForm";
 
 // Configure axios defaults
-axios.defaults.baseURL = process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com';
+const API_URL = process.env.REACT_APP_API_URL || 'https://syncfit-ez0z.onrender.com';
+axios.defaults.baseURL = API_URL;
 axios.defaults.withCredentials = true;
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-axios.defaults.headers.common['Access-Control-Allow-Credentials'] = 'true';
+axios.defaults.headers.common['Accept'] = 'application/json';
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+
+// Add request interceptor for error handling
+axios.interceptors.request.use(
+  config => {
+    // Add timestamp to prevent caching
+    config.params = { ...config.params, _t: Date.now() };
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+);
+
+// Add response interceptor for error handling
+axios.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response?.status === 404) {
+      console.error('API endpoint not found:', error.config.url);
+    }
+    return Promise.reject(error);
+  }
+);
 
 function App() {
   const [message, setMessage] = useState("");
