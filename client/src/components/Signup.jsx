@@ -26,7 +26,7 @@ const Signup = () => {
     
     try {
       const result = await axios.post(
-        'http://localhost:5001/api/auth/register',
+        'https://syncfit-j7pw.onrender.com/api/auth/register',
         { 
           name: name.trim(), 
           email: email.trim(), 

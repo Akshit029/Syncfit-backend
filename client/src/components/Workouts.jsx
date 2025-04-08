@@ -33,13 +33,13 @@
 //   const fetchWorkoutData = async () => {
 //     try {
 //       // Fetch workout plan
-//       const planResponse = await axios.get('http://localhost:5001/api/fitness/workout-plan', { withCredentials: true });
+//       const planResponse = await axios.get('https://syncfit-j7pw.onrender.com/api/fitness/workout-plan', { withCredentials: true });
 //       if (planResponse.data) {
 //         setWorkoutPlan(planResponse.data);
 //       }
       
 //       // Fetch today's workout
-//       const todayResponse = await axios.get('http://localhost:5001/api/fitness/today-workout', { withCredentials: true });
+//       const todayResponse = await axios.get('https://syncfit-j7pw.onrender.com/api/fitness/today-workout', { withCredentials: true });
 //       if (todayResponse.data) {
 //         setTodayWorkout(todayResponse.data);
 //       }
@@ -65,7 +65,7 @@
 //         return;
 //       }
       
-//       const response = await axios.post('http://localhost:5001/api/fitness/add-exercise', {
+//       const response = await axios.post('https://syncfit-j7pw.onrender.com/api/fitness/add-exercise', {
 //         ...newExercise,
 //         calories: parseFloat(newExercise.calories),
 //         duration: parseFloat(newExercise.duration)
@@ -100,7 +100,7 @@
 //         return;
 //       }
       
-//       const response = await axios.post('http://localhost:5001/api/fitness/complete-workout', {
+//       const response = await axios.post('https://syncfit-j7pw.onrender.com/api/fitness/complete-workout', {
 //         exercises: todayWorkout.exercises,
 //         totalCalories: todayWorkout.totalCalories,
 //         totalDuration: todayWorkout.totalDuration
@@ -130,7 +130,7 @@
 //   // Function to remove an exercise
 //   const removeExercise = async (index) => {
 //     try {
-//       const response = await axios.post('http://localhost:5001/api/fitness/remove-exercise', { index }, { withCredentials: true });
+//       const response = await axios.post('https://syncfit-j7pw.onrender.com/api/fitness/remove-exercise', { index }, { withCredentials: true });
       
 //       if (response.data) {
 //         setTodayWorkout(response.data);

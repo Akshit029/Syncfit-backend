@@ -25,7 +25,7 @@ ChartJS.register(
 
 // Configure axios
 axios.defaults.withCredentials = true; // Important for cookies/authentication
-const API_URL = 'http://localhost:5001/api'; // Update with your backend URL
+const API_URL = 'https://syncfit-j7pw.onrender.com/api'; // Update with your backend URL
 
 const Dashboard = () => {
   // User data state
@@ -156,7 +156,7 @@ const Dashboard = () => {
     if (isAuthenticated) {
       fetchUserData();
     }
-  }, [isAuthenticated, timeView]);
+  }, [isAuthenticated, timeView, fetchUserData]);
 
   // Fetch user data from MongoDB - Moved to a useCallback to use in dependencies
   const fetchUserData = useCallback(async () => {
@@ -541,6 +541,7 @@ const Dashboard = () => {
   }, [timeView, userData.weightData, allWeightEntries, isMobile]);
 
   // Remove a workout
+  // eslint-disable-next-line no-unused-vars
   const removeWorkout = async (date) => {
     try {
       const response = await axios.delete(`${API_URL}/fitness/workout/${date}`);
@@ -552,6 +553,7 @@ const Dashboard = () => {
   };
 
   // Remove an exercise from a workout
+  // eslint-disable-next-line no-unused-vars
   const removeExercise = async (date, exerciseIndex) => {
     try {
       const response = await axios.post(`${API_URL}/fitness/remove-history-exercise`, {

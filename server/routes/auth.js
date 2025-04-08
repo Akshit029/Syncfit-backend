@@ -166,10 +166,17 @@ router.get('/user', async (req, res) => {
     // Verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    // Find the user
+    // Find the user and verify they exist
     const user = await User.findById(decoded.userId).select('-password');
     
     if (!user) {
+      // Clear invalid token
+      res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'Lax',
+        path: '/'
+      });
       return res.status(404).json({ message: 'User not found' });
     }
     
@@ -184,6 +191,13 @@ router.get('/user', async (req, res) => {
       user: userData
     });
   } catch (err) {
+    // Clear invalid token on any error
+    res.clearCookie('token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'Lax',
+      path: '/'
+    });
     console.error('Auth check error:', err);
     return res.status(401).json({ message: 'Not authenticated' });
   }
@@ -193,6 +207,17 @@ router.get('/user', async (req, res) => {
 router.post('/logout', (req, res) => {
   res.clearCookie('token');
   return res.json({ message: 'Logged out successfully' });
+});
+
+// Force logout all users (clear all cookies)
+router.post('/force-logout', (req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'Lax',
+    path: '/'
+  });
+  return res.json({ message: 'All sessions cleared' });
 });
 
 

@@ -18,7 +18,7 @@ import HealthCalculator from "./components/HealthCalculator";
 import FeedbackForm from "./components/FeedbackForm";
 
 // Configure axios defaults
-axios.defaults.baseURL = 'http://localhost:5001';
+axios.defaults.baseURL = 'https://syncfit-j7pw.onrender.com';
 axios.defaults.withCredentials = true;
 
 function App() {

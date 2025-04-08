@@ -20,7 +20,7 @@ const Login = () => {
     
     try {
       const result = await axios.post(
-        'http://localhost:5001/api/auth/login',
+        'https://syncfit-j7pw.onrender.com/api/auth/login',
         { email: trimmedEmail, password: trimmedPassword },
         { withCredentials: true }
       );
