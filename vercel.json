@@ -13,22 +13,14 @@
     {
       "source": "/api/:path*",
       "destination": "https://syncfit-ez0z.onrender.com/api/:path*"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|json))",
-      "dest": "/client/build/$1",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
-      }
     },
     {
-      "src": "/(.*)",
-      "dest": "/client/build/index.html",
-      "headers": {
-        "Cache-Control": "public, max-age=0, must-revalidate"
-      }
+      "source": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|json))",
+      "destination": "/client/build/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/client/build/index.html"
     }
   ],
   "env": {
